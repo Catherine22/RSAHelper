@@ -26,8 +26,8 @@ public class Main {
 
 	private final static String[] secretKeys = { "Czc0SC", "xvaw089", "ca90vj", "NCV0dk", "Xhf0i4m" };
 	private static List<String> encrypedSecretKeys = new ArrayList<>();
-	private static String modulus;
-	private static String exponent;
+	private static String MODULUS;
+	private static String EXPONENT;
 
 	public static void main(String[] args) {
 		try {
@@ -80,10 +80,10 @@ public class Main {
 		RSAPublicKeySpec rsaPublicKeySpec = (RSAPublicKeySpec) kFactory.getKeySpec(publicKey, clazz);
 		// 对RSA算法来说，只要获取modulus和exponent这两个RSA算法特定的参数就可以了
 
-		modulus = Base64.getEncoder().encodeToString(rsaPublicKeySpec.getModulus().toByteArray());
-		exponent = Base64.getEncoder().encodeToString(rsaPublicKeySpec.getPublicExponent().toByteArray());
-		System.out.println("modulus:" + modulus);
-		System.out.println("exponent:" + exponent);
+		MODULUS = Base64.getEncoder().encodeToString(rsaPublicKeySpec.getModulus().toByteArray());
+		EXPONENT = Base64.getEncoder().encodeToString(rsaPublicKeySpec.getPublicExponent().toByteArray());
+		System.out.println("modulus:" + MODULUS);
+		System.out.println("exponent:" + EXPONENT);
 		return privateKey;
 	}
 
@@ -159,8 +159,8 @@ public class Main {
 			InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException,
 			InvalidAlgorithmParameterException, ClassNotFoundException, InvalidKeySpecException {
 		Cipher c2 = Cipher.getInstance(Algorithm.rules.get("RSA")); // 创建一个Cipher对象，注意这里用的算法需要和Key的算法匹配
-		BigInteger m = new BigInteger(Base64.getDecoder().decode(modulus));
-		BigInteger e = new BigInteger(Base64.getDecoder().decode(exponent));
+		BigInteger m = new BigInteger(Base64.getDecoder().decode(MODULUS));
+		BigInteger e = new BigInteger(Base64.getDecoder().decode(EXPONENT));
 		c2.init(Cipher.DECRYPT_MODE, converStringToPublicKey(m, e)); // 设置Cipher为解密工作模式，需要把Key传进去
 		byte[] decryptedData = c2.doFinal(Base64.getDecoder().decode(message));
 		return new String(decryptedData, Algorithm.CHARSET);
