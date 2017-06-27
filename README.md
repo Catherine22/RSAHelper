@@ -10,7 +10,7 @@ Using this program to encrypt your secret keys, you post those encrypted strings
   - Generate encrypted messages.
   - Generate a pair of RSA modulus and exponent for decryption.
 
-# Instructions
+# Instruction
 
 ## Step1. Fill in your secret keys
 
@@ -94,7 +94,7 @@ public static Key converStringToPublicKey(BigInteger modulus, BigInteger exponen
 }
 ```
 
-# Warnings
+# Warning
 When you add new secret keys, you must refill modulus, exponent and the other encrypted keys, because you get different RSA KeyPair(private key and public key) every execution.
 
 # License
